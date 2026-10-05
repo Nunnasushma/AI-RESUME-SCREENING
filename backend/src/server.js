@@ -34,8 +34,17 @@ app.get('/api/health', (req, res) => {
 });
 
 // Start Server & Connect Database
-connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`[Express Backend] Server running on http://127.0.0.1:${PORT}`);
+connectDB()
+  .then(() => {
+    const server = app.listen(PORT, '0.0.0.0', () => {
+      console.log(`[Express Backend] Server running on port ${PORT}`);
+    });
+
+    server.on('error', (error) => {
+      console.error('[Express Backend] Server error:', error);
+    });
+  })
+  .catch((error) => {
+    console.error('[Database] Failed to connect:', error);
+    process.exit(1);
   });
-});
