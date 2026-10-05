@@ -4,3 +4,4 @@
 !.env.example
 dist/
 uploads/
+node_modules/
